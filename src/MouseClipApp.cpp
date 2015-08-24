@@ -31,8 +31,8 @@ void MouseClipApp::setup() {
   // hideCursor();              -> Cinder Library
   // CGDisplayHideCursor(0);    -> ApplicationServices
   
-  u_int32_t wide = CGDisplayPixelsWide(display.getCgDirectDisplayId());
-  u_int32_t high = CGDisplayPixelsHigh(display.getCgDirectDisplayId());
+  u_int32_t wide = CGDisplayPixelsWide(0);
+  u_int32_t high = CGDisplayPixelsHigh(0);
   console() << "モニターの横幅:" << wide << endl;
   console() << "モニターの縦幅:" << high << endl;
 }
@@ -45,6 +45,7 @@ void MouseClipApp::mouseDown(MouseEvent event) {
   
   // CGWarpMouseCursorPositionと変わりなし
   CGDisplayMoveCursorToPoint(display.getCgDirectDisplayId(), pos);
+  console() << display.getCgDirectDisplayId() << endl;
 }
 
 void MouseClipApp::update() {}
