@@ -13,6 +13,9 @@ using namespace std;
 class MouseClipApp : public AppNative {
 private:
   CGPoint pos;
+  
+  // CGDirectDisplayIDを取得
+  Display display;
 
 public:
   void setup();
@@ -22,17 +25,26 @@ public:
 };
 
 void MouseClipApp::setup() {
-  pos.x = getWindowWidth() / 2;
-  pos.y = getWindowHeight() / 2;
+  setWindowPos(0, 0);
   
   // カーソル非表示
   // hideCursor();              -> Cinder Library
   // CGDisplayHideCursor(0);    -> ApplicationServices
+  
+  u_int32_t wide = CGDisplayPixelsWide(display.getCgDirectDisplayId());
+  u_int32_t high = CGDisplayPixelsHigh(display.getCgDirectDisplayId());
+  console() << "モニターの横幅:" << wide << endl;
+  console() << "モニターの縦幅:" << high << endl;
 }
 
 void MouseClipApp::mouseDown(MouseEvent event) {
   // カーソル移動
-  CGWarpMouseCursorPosition(pos);
+  // CGWarpMouseCursorPosition(pos);
+  pos.x = 0;
+  pos.y = 0;
+  
+  // CGWarpMouseCursorPositionと変わりなし
+  CGDisplayMoveCursorToPoint(display.getCgDirectDisplayId(), pos);
 }
 
 void MouseClipApp::update() {}
